@@ -6,6 +6,7 @@ from aiofiles import open as aiopen
 from aiofiles.os import makedirs, remove, path as aiopath
 from aioshutil import rmtree
 
+from sabnzbdapi.exception import APIResponseError
 
 from .. import (
     LOGGER,
@@ -44,13 +45,11 @@ async def update_qb_options():
         for k in list(qbit_options.keys()):
             if k.startswith("rss"):
                 del qbit_options[k]
-        qbit_options["web_ui_password"] = "admin1"
+        qbit_options["web_ui_password"] = "admin"
         await TorrentManager.qbittorrent.app.set_preferences(
-            {"web_ui_password": "admin1"}
+            {"web_ui_password": "admin"}
         )
     else:
-        if qbit_options.get("web_ui_password") == "admin":
-            qbit_options["web_ui_password"] = "admin1"
         await TorrentManager.qbittorrent.app.set_preferences(qbit_options)
 
 
@@ -201,8 +200,6 @@ async def load_settings():
                 del row["_id"]
                 rss_dict[user_id] = row
             LOGGER.info("RSS data has been imported from MongoDB")
-    from ..helper.telegram_helper.bot_commands import BotCommands
-    BotCommands.refresh_commands()
 
 
 async def save_settings():

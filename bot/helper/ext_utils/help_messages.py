@@ -55,8 +55,7 @@ link6 will get uploaded normally alone
 
 thumb = """<b>Thumbnail for current task</b>: -t
 
-/cmd link -t image-url or tg-message-link (doc or photo) or none (file without thumb)
-Supports any direct image URL (jpg, png, webp, etc.) or a Telegram message link containing a photo/document."""
+/cmd link -t tg-message-link (doc or photo) or none (file without thumb)"""
 
 split_size = """<b>Split size for current task</b>: -sp
 

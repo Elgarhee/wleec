@@ -45,7 +45,6 @@ from .ext_utils.links_utils import (
 from .ext_utils.media_utils import (
     FFMpeg,
     create_thumb,
-    download_image_thumb,
     get_document_type,
     take_ss,
 )
@@ -134,7 +133,6 @@ class TaskConfig:
         self.is_file = False
         self.bot_trans = False
         self.user_trans = False
-        self.is_rss = getattr(self.message, "_rss_trigger", False)
         self.progress = True
         self.ffmpeg_cmds = None
         self.metadata_title = None
@@ -537,14 +535,11 @@ class TaskConfig:
                 )
             )
 
-            if self.thumb and self.thumb != "none":
-                if is_telegram_link(self.thumb):
-                    msg = (await get_tg_link_message(self.thumb))[0]
-                    self.thumb = (
-                        await create_thumb(msg) if msg.photo or msg.document else ""
-                    )
-                elif self.thumb.startswith("http"):
-                    self.thumb = await download_image_thumb(self.thumb)
+            if self.thumb != "none" and is_telegram_link(self.thumb):
+                msg = (await get_tg_link_message(self.thumb))[0]
+                self.thumb = (
+                    await create_thumb(msg) if msg.photo or msg.document else ""
+                )
 
     async def get_tag(self, text: list):
         if len(text) > 1 and text[1].startswith("Tag: "):

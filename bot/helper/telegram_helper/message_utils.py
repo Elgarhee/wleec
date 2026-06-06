@@ -14,7 +14,6 @@ from pyrogram.errors import (
     MediaEmpty,
     MediaCaptionTooLong,
     EntityBoundsInvalid,
-    PeerIdInvalid,
 )
 
 try:
@@ -99,11 +98,6 @@ async def send_message(message, text, buttons=None, block=True, photo=None, **kw
         return await send_message(message, text, None)
     except (MessageEmpty, EntityBoundsInvalid):
         return await send_message(message, text, parse_mode=ParseMode.DISABLED)
-    except PeerIdInvalid:
-        if isinstance(message, int):
-            await TgClient.bot.resolve_peer(message)
-            return await send_message(message, text, buttons, block, photo)
-        raise
     except Exception as e:
         LOGGER.error(str(e), exc_info=True)
         return str(e)
@@ -166,7 +160,8 @@ async def send_file(message, file, caption="", buttons=None):
 
 async def send_rss(text, chat_id, thread_id):
     try:
-        return await TgClient.bot.send_message(
+        app = TgClient.user or TgClient.bot
+        return await app.send_message(
             chat_id=chat_id,
             text=text,
             disable_web_page_preview=True,
@@ -176,7 +171,7 @@ async def send_rss(text, chat_id, thread_id):
     except (FloodWait, FloodPremiumWait) as f:
         LOGGER.warning(str(f))
         await sleep(f.value * 1.2)
-        return await send_rss(text, chat_id, thread_id)
+        return await send_rss(text)
     except Exception as e:
         LOGGER.error(str(e), exc_info=True)
         return str(e)

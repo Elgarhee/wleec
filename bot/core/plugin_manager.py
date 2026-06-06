@@ -78,6 +78,7 @@ class PluginManager:
             BotCommands.refresh_commands()
 
             importlib.reload(sys.modules["bot.helper.ext_utils.help_messages"])
+            from ..helper.ext_utils.help_messages import BOT_COMMANDS, help_string
 
             globals()["BOT_COMMANDS"] = get_bot_commands()
             globals()["help_string"] = get_help_string()

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 ARIA2C=$1
 SABNZBDPLUS=$2
 

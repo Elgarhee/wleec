@@ -12,7 +12,6 @@ class Config:
     BOT_MAX_TASKS = 0
     BOT_PM = False
     CMD_SUFFIX = ""
-    COLORED_BTNS = False
     DEFAULT_LANG = "en"
     DATABASE_URL = ""
     DEFAULT_UPLOAD = "rc"
@@ -35,10 +34,6 @@ class Config:
     PIXELDRAIN_KEY = ""
     PROTECTED_API = ""
     BUZZHEAVIER_API = ""
-    DEVUPLOADS_KEY = ""
-    DEVUPLOADS_FOLDER = ""
-    VIKINGFILE_HASH = ""
-    VIKINGFILE_FOLDER = ""
     GDRIVE_ID = ""
     GD_DESP = "Uploaded with WZ Bot"
     AUTHOR_NAME = "WZML-X"

@@ -1,5 +1,4 @@
 from asyncio import sleep
-from pyrogram.enums import ButtonStyle
 from functools import partial
 from html import escape
 from io import BytesIO
@@ -50,10 +49,6 @@ uphoster_options = [
     "BUZZHEAVIER_TOKEN",
     "BUZZHEAVIER_FOLDER_ID",
     "PIXELDRAIN_KEY",
-    "DEVUPLOADS_KEY",
-    "DEVUPLOADS_FOLDER",
-    "VIKINGFILE_HASH",
-    "VIKINGFILE_FOLDER",
 ]
 rclone_options = ["RCLONE_CONFIG", "RCLONE_PATH", "RCLONE_FLAGS"]
 gdrive_options = ["TOKEN_PICKLE", "GDRIVE_ID", "INDEX_URL"]
@@ -292,26 +287,6 @@ Here I will explain how to use mltb.* which is reference to files you want to wo
         "PixelDrain API Key",
         "<i>Send your PixelDrain API Key.</i> \n┖ <b>Time Left :</b> <code>60 sec</code>",
     ),
-    "DEVUPLOADS_KEY": (
-        "String",
-        "DevUploads API Key",
-        "<i>Send your DevUploads API Key.</i> \n┖ <b>Time Left :</b> <code>60 sec</code>",
-    ),
-    "DEVUPLOADS_FOLDER": (
-        "String",
-        "DevUploads Folder ID",
-        "<i>Send your DevUploads Folder ID. Leave empty to upload to root.</i> \n┖ <b>Time Left :</b> <code>60 sec</code>",
-    ),
-    "VIKINGFILE_HASH": (
-        "String",
-        "VikingFile Hash",
-        "<i>Send your VikingFile User Hash.</i> \n┖ <b>Time Left :</b> <code>60 sec</code>",
-    ),
-    "VIKINGFILE_FOLDER": (
-        "String",
-        "VikingFile Folder Name",
-        "<i>Send your VikingFile folder name/path. Leave empty to upload to root.</i> \n┖ <b>Time Left :</b> <code>60 sec</code>",
-    ),
 }
 
 
@@ -352,12 +327,7 @@ async def get_user_settings(from_user, stype="main"):
             buttons.data_button(
                 "Reset All", f"userset {user_id} confirm_reset_all", position="footer"
             )
-        buttons.data_button(
-            "Close",
-            f"userset {user_id} close",
-            position="footer",
-            style=ButtonStyle.DANGER,
-        )
+        buttons.data_button("Close", f"userset {user_id} close", position="footer")
 
         text = f"""⌬ <b>User Settings :</b>
 │
@@ -389,9 +359,7 @@ async def get_user_settings(from_user, stype="main"):
         )
 
         buttons.data_button("Back", f"userset {user_id} back", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
 
         def_cookies = user_dict.get("USE_DEFAULT_COOKIE", False)
         cookie_mode = "Owner's Cookie" if def_cookies else "User's Cookie"
@@ -539,9 +507,7 @@ async def get_user_settings(from_user, stype="main"):
             thumb_layout = "None"
 
         buttons.data_button("Back", f"userset {user_id} back", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(2)
 
         text = f"""⌬ <b>Leech Settings :</b>
@@ -570,12 +536,8 @@ async def get_user_settings(from_user, stype="main"):
         buttons.data_button("Gofile Tools", f"userset {user_id} gofile")
         buttons.data_button("BuzzHeavier Tools", f"userset {user_id} buzzheavier")
         buttons.data_button("PixelDrain Tools", f"userset {user_id} pixeldrain")
-        buttons.data_button("DevUploads Tools", f"userset {user_id} devuploads")
-        buttons.data_button("VikingFile Tools", f"userset {user_id} vikingfile")
         buttons.data_button("Back", f"userset {user_id} back", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(1)
 
         destinations = [s.capitalize() for s in uphoster_service.split(",")]
@@ -587,9 +549,7 @@ async def get_user_settings(from_user, stype="main"):
     elif stype == "pixeldrain":
         buttons.data_button("PixelDrain Key", f"userset {user_id} menu PIXELDRAIN_KEY")
         buttons.data_button("Back", f"userset {user_id} back uphoster", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(1)
 
         if user_dict.get("PIXELDRAIN_KEY", False):
@@ -612,9 +572,7 @@ async def get_user_settings(from_user, stype="main"):
             "BuzzHeavier Folder ID", f"userset {user_id} menu BUZZHEAVIER_FOLDER_ID"
         )
         buttons.data_button("Back", f"userset {user_id} back uphoster", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(1)
 
         if user_dict.get("BUZZHEAVIER_TOKEN", False):
@@ -635,65 +593,13 @@ async def get_user_settings(from_user, stype="main"):
 ┠ <b>BuzzHeavier Token</b> → <code>{bztoken}</code>
 ┖ <b>BuzzHeavier Folder ID</b> → <code>{bzfolder}</code>"""
 
-    elif stype == "devuploads":
-        buttons.data_button(
-            "DevUploads API Key", f"userset {user_id} menu DEVUPLOADS_KEY"
-        )
-        buttons.data_button(
-            "DevUploads Folder ID", f"userset {user_id} menu DEVUPLOADS_FOLDER"
-        )
-        buttons.data_button("Back", f"userset {user_id} back uphoster", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
-        btns = buttons.build_menu(1)
-
-        dukey = user_dict.get("DEVUPLOADS_KEY") or Config.DEVUPLOADS_KEY or "None"
-        dufolder = (
-            user_dict.get("DEVUPLOADS_FOLDER")
-            or Config.DEVUPLOADS_FOLDER
-            or "None (Root)"
-        )
-        text = f"""⌬ <b>DevUploads Settings :</b>
-┟ <b>Name</b> → {user_name}
-┃
-┠ <b>DevUploads Key</b> → <code>{dukey}</code>
-┖ <b>DevUploads Folder ID</b> → <code>{dufolder}</code>"""
-
-    elif stype == "vikingfile":
-        buttons.data_button(
-            "VikingFile Hash", f"userset {user_id} menu VIKINGFILE_HASH"
-        )
-        buttons.data_button(
-            "VikingFile Folder", f"userset {user_id} menu VIKINGFILE_FOLDER"
-        )
-        buttons.data_button("Back", f"userset {user_id} back uphoster", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
-        btns = buttons.build_menu(1)
-
-        vfkey = user_dict.get("VIKINGFILE_HASH") or Config.VIKINGFILE_HASH or "None"
-        vffolder = (
-            user_dict.get("VIKINGFILE_FOLDER")
-            or Config.VIKINGFILE_FOLDER
-            or "None (Root)"
-        )
-        text = f"""⌬ <b>VikingFile Settings :</b>
-┟ <b>Name</b> → {user_name}
-┃
-┠ <b>VikingFile Hash</b> → <code>{vfkey}</code>
-┖ <b>VikingFile Folder</b> → <code>{vffolder}</code>"""
-
     elif stype == "gofile":
         buttons.data_button("Gofile Token", f"userset {user_id} menu GOFILE_TOKEN")
         buttons.data_button(
             "Gofile Folder ID", f"userset {user_id} menu GOFILE_FOLDER_ID"
         )
         buttons.data_button("Back", f"userset {user_id} back uphoster", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(1)
 
         if user_dict.get("GOFILE_TOKEN", False):
@@ -724,9 +630,7 @@ async def get_user_settings(from_user, stype="main"):
         buttons.data_button("Rclone Flags", f"userset {user_id} menu RCLONE_FLAGS")
 
         buttons.data_button("Back", f"userset {user_id} back mirror", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
 
         rccmsg = "Exists" if await aiopath.exists(rclone_conf) else "Not Exists"
         if user_dict.get("RCLONE_PATH", False):
@@ -772,9 +676,7 @@ async def get_user_settings(from_user, stype="main"):
             )
             sd_msg = "Disabled"
         buttons.data_button("Back", f"userset {user_id} back mirror", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
 
         tokenmsg = "Exists" if await aiopath.exists(token_pickle) else "Not Exists"
         if user_dict.get("GDRIVE_ID", False):
@@ -824,9 +726,7 @@ async def get_user_settings(from_user, stype="main"):
 
         buttons.data_button("YT Up Tools", f"userset {user_id} yttools")
         buttons.data_button("Back", f"userset {user_id} back", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(1)
 
         text = f"""⌬ <b>Mirror Settings :</b>
@@ -902,9 +802,7 @@ async def get_user_settings(from_user, stype="main"):
             display_subtitle_meta = f"<code>{display_subtitle_meta}</code>"
 
         buttons.data_button("Back", f"userset {user_id} back", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(2)
 
         text = f"""⌬ <b>FF Settings :</b>
@@ -962,9 +860,7 @@ async def get_user_settings(from_user, stype="main"):
         )
 
         buttons.data_button("Back", f"userset {user_id} back", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(1)
 
         text = f"""⌬ <b>Advanced Settings :</b>
@@ -1013,9 +909,7 @@ async def get_user_settings(from_user, stype="main"):
         )
 
         buttons.data_button("Back", f"userset {user_id} back mirror", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         btns = buttons.build_menu(2)
 
         text = f"""⌬ <b>YouTube Tools Settings:</b>
@@ -1255,9 +1149,7 @@ async def get_menu(option, message, user_id):
     else:
         back_to = "back"
     buttons.data_button("Back", f"userset {user_id} {back_to}", "footer")
-    buttons.data_button(
-        "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-    )
+    buttons.data_button("Close", f"userset {user_id} close", "footer")
     val = user_dict.get(option)
     if option in file_dict and await aiopath.exists(file_dict[option]):
         val = "<b>Exists</b>"
@@ -1375,8 +1267,6 @@ async def edit_user_settings(client, query):
         "gofile",
         "buzzheavier",
         "pixeldrain",
-        "devuploads",
-        "vikingfile",
         "ffset",
         "advanced",
         "gdrive",
@@ -1414,13 +1304,7 @@ async def edit_user_settings(client, query):
             )
 
         buttons = ButtonMaker()
-        for service in [
-            "gofile",
-            "buzzheavier",
-            "pixeldrain",
-            "devuploads",
-            "vikingfile",
-        ]:
+        for service in ["gofile", "buzzheavier", "pixeldrain"]:
             state = "✓" if service in selected_services else ""
             buttons.data_button(
                 f"{service.capitalize()} {state}",
@@ -1428,11 +1312,9 @@ async def edit_user_settings(client, query):
             )
 
         buttons.data_button("Back", f"userset {user_id} back uphoster", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
 
-        text = """⌬ <b>Select Uphoster Destinations :</b>"""
+        text = f"""⌬ <b>Select Uphoster Destinations :</b>"""
         await edit_message(message, text, buttons.build_menu(1))
     elif data[2] == "menu":
         await query.answer()
@@ -1454,9 +1336,7 @@ async def edit_user_settings(client, query):
         text = user_settings_text[data[3]][2]
         buttons.data_button("Stop", f"userset {user_id} menu {data[3]} stop")
         buttons.data_button("Back", f"userset {user_id} menu {data[3]}", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         prompt_title = data[3].replace("_", " ").title()
         new_message_text = f"⌬ <b>Set {prompt_title}</b>\n\n{text}"
         await edit_message(message, new_message_text, buttons.build_menu(1))
@@ -1484,9 +1364,7 @@ async def edit_user_settings(client, query):
             func = remove_one
         buttons.data_button("Stop", f"userset {user_id} menu {data[3]} stop")
         buttons.data_button("Back", f"userset {user_id} menu {data[3]}", "footer")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         await edit_message(
             message, message.text.html + "\n\n" + text, buttons.build_menu(1)
         )
@@ -1527,9 +1405,7 @@ async def edit_user_settings(client, query):
         buttons = ButtonMaker()
         buttons.data_button("Yes", f"userset {user_id} do_reset_all yes")
         buttons.data_button("No", f"userset {user_id} do_reset_all no")
-        buttons.data_button(
-            "Close", f"userset {user_id} close", "footer", style=ButtonStyle.DANGER
-        )
+        buttons.data_button("Close", f"userset {user_id} close", "footer")
         text = "<i>Are you sure you want to reset all your user settings?</i>"
         await edit_message(query.message, text, buttons.build_menu(2))
     elif data[2] == "do_reset_all":

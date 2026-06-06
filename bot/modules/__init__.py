@@ -11,6 +11,7 @@ from .gd_search import gdrive_search, select_type
 from .help import arg_usage, bot_help
 from .mediainfo import mediainfo
 from .broadcast import broadcast
+from .uphoster import uphoster
 from .mirror_leech import (
     mirror,
     leech,
@@ -20,7 +21,6 @@ from .mirror_leech import (
     jd_mirror,
     nzb_leech,
     nzb_mirror,
-    uphoster,
 )
 from .restart import (
     restart_bot,

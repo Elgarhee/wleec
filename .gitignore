@@ -1,7 +1,7 @@
 .venv/*
 config.py
+config_S*.py
 token.pickle
-credentials.json
 rclone.conf
 .netrc
 log.txt
@@ -17,9 +17,3 @@ list_drives.txt
 shortener.txt
 cookies.txt
 downloads/*
-.github/instructions/*
-.github/skills/*
-.github/agents/*
-graphify-out/*
-.graphify_*
-__pycache__/
