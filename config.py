@@ -4,7 +4,7 @@ OWNER_ID = 874241545
 TELEGRAM_API = 23130234
 TELEGRAM_HASH = "fa96951e221e064f9e0d91be4ca1b38c"
 DATABASE_URL = "mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority"
-BASE_URL = "https://mosalsalat2-b569524a321e.herokuapp.com/"
+BASE_URL = "https://mosal2-ee6b63c054de.herokuapp.com/"
 
 # OPTIONAL CONFIG
 TG_PROXY = {}
