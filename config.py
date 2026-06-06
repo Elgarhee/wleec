@@ -1,10 +1,10 @@
 # REQUIRED CONFIG
-BOT_TOKEN = "6820545627:AAFP9u0aDHEcSKr1jZZEQWkMmwXB0sQSGUc"
+BOT_TOKEN = "7781800190:AAFghYvTT6I_eZCDUTjWh9a09XdDRJQ8KV8"
 OWNER_ID = 874241545
 TELEGRAM_API = 23130234
 TELEGRAM_HASH = "fa96951e221e064f9e0d91be4ca1b38c"
 DATABASE_URL = "mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority"
-BASE_URL = "https://mosal2-ee6b63c054de.herokuapp.com/"
+BASE_URL = "https://tserv2bot-7de4f41f49b8.herokuapp.com/"
 
 # OPTIONAL CONFIG
 TG_PROXY = {}
