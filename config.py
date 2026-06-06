@@ -4,7 +4,7 @@ OWNER_ID = 874241545
 TELEGRAM_API = 23130234
 TELEGRAM_HASH = "fa96951e221e064f9e0d91be4ca1b38c"
 DATABASE_URL = "mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority"
-BASE_URL = "https://tserv2bot-7de4f41f49b8.herokuapp.com/"
+BASE_URL = "https://tvshowsec2-e3fd90f0267a.herokuapp.com/"
 
 # OPTIONAL CONFIG
 TG_PROXY = {}
