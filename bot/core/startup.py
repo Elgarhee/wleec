@@ -201,6 +201,8 @@ async def load_settings():
                 del row["_id"]
                 rss_dict[user_id] = row
             LOGGER.info("RSS data has been imported from MongoDB")
+    from ..helper.telegram_helper.bot_commands import BotCommands
+    BotCommands.refresh_commands()
 
 
 async def save_settings():
