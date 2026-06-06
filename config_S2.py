@@ -1,10 +1,10 @@
-﻿# REQUIRED CONFIG
-BOT_TOKEN = "7781800190:AAEmLLgjacjRBQTbkFya3tW-2sYlYKlPjaU"
+# REQUIRED CONFIG
+BOT_TOKEN = "7781800190:AAFghYvTT6I_eZCDUTjWh9a09XdDRJQ8KV8"
 OWNER_ID = 874241545
-TELEGRAM_API = 23130234
-TELEGRAM_HASH = "fa96951e221e064f9e0d91be4ca1b38c"
+TELEGRAM_API = 28923610
+TELEGRAM_HASH = "38d2887009953340ca15f004b8f722f9"
 DATABASE_URL = "mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority"
-BASE_URL = "https://serebot2-0f2f04219d92.herokuapp.com/"
+BASE_URL = ""
 
 # OPTIONAL CONFIG
 TG_PROXY = {}
@@ -64,8 +64,8 @@ JD_PASS = ""
 USENET_SERVERS = []
 
 # Update
-UPSTREAM_REPO = "https://github.com/SilentDemonSD/WZML-X"
-UPSTREAM_BRANCH = "wzv3"
+UPSTREAM_REPO = "https://github.com/Abdalla2307/wleec"
+UPSTREAM_BRANCH = "codex/fix-thumbnail-retrieval-logic"
 UPDATE_PKGS = True
 
 # Leech

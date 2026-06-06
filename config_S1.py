@@ -1,4 +1,4 @@
-﻿# REQUIRED CONFIG
+# REQUIRED CONFIG
 BOT_TOKEN = "6820545627:AAFP9u0aDHEcSKr1jZZEQWkMmwXB0sQSGUc"
 OWNER_ID = 874241545
 TELEGRAM_API = 23130234
@@ -64,8 +64,8 @@ JD_PASS = ""
 USENET_SERVERS = []
 
 # Update
-UPSTREAM_REPO = "https://github.com/SilentDemonSD/WZML-X"
-UPSTREAM_BRANCH = "wzv3"
+UPSTREAM_REPO = "https://github.com/Abdalla2307/wleec"
+UPSTREAM_BRANCH = "codex/fix-thumbnail-retrieval-logic"
 UPDATE_PKGS = True
 
 # Leech
