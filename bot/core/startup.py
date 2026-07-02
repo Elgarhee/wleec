@@ -110,6 +110,13 @@ async def load_settings():
             await database.db.settings.deployConfig.replace_one(
                 {"_id": BOT_ID}, config_file, upsert=True
             )
+        # Force local BASE_URL to overwrite database configuration
+        local_base_url = environ.get("BASE_URL", "").strip() or config_file.get("BASE_URL", "").strip()
+        if local_base_url:
+            await database.db.settings.config.update_one(
+                {"_id": BOT_ID}, {"$set": {"BASE_URL": local_base_url}}, upsert=True
+            )
+
         if old_config and old_config != config_file:
             LOGGER.info("Saving.. Deploy Config imported from Bot")
             await database.db.settings.deployConfig.replace_one(
@@ -120,6 +127,8 @@ async def load_settings():
                 or {}
             )
             config_dict.update(config_file)
+            if local_base_url:
+                config_dict["BASE_URL"] = local_base_url
             if config_dict:
                 Config.load_dict(config_dict)
         else:
@@ -128,7 +137,10 @@ async def load_settings():
                 {"_id": BOT_ID}, {"_id": 0}
             )
             if config_dict:
+                if local_base_url:
+                    config_dict["BASE_URL"] = local_base_url
                 Config.load_dict(config_dict)
+
 
         if pf_dict := await database.db.settings.files.find_one(
             {"_id": BOT_ID}, {"_id": 0}
