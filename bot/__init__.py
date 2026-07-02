@@ -1,5 +1,9 @@
 # ruff: noqa: E402
 
+import os
+if os.path.exists("/wzvenv/bin"):
+    os.environ["PATH"] = f"/wzvenv/bin:{os.environ.get('PATH', '')}"
+
 try:
     from uvloop import install
     install()
