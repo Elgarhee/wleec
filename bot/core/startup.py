@@ -111,7 +111,12 @@ async def load_settings():
                 {"_id": BOT_ID}, config_file, upsert=True
             )
         # Force local BASE_URL to overwrite database configuration
-        local_base_url = environ.get("BASE_URL", "").strip() or config_file.get("BASE_URL", "").strip()
+        local_base_url = (
+            environ.get("BASE_URL", "").strip()
+            or environ.get("RENDER_EXTERNAL_URL", "").strip()
+            or config_file.get("BASE_URL", "").strip()
+        )
+
         if local_base_url:
             await database.db.settings.config.update_one(
                 {"_id": BOT_ID}, {"$set": {"BASE_URL": local_base_url}}, upsert=True
