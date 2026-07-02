@@ -1,0 +1,138 @@
+envVarGroups:
+  - name: wzmlx-shared-vars
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TELEGRAM_API
+        sync: false
+      - key: TELEGRAM_HASH
+        sync: false
+      - key: OWNER_ID
+        sync: false
+      - key: UPSTREAM_REPO
+        value: https://github.com/Elgarhee/wleec
+      - key: UPSTREAM_BRANCH
+        value: wzv3
+      - key: BASE_URL
+        sync: false
+
+services:
+  - type: web
+    name: bot1-web
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: BOT_INDEX
+        value: 1
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot2-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 2
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot3-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 3
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot4-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 4
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot5-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 5
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot6-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 6
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot7-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 7
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot8-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 8
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot9-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 9
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot10-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 10
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot11-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 11
+      - fromGroup: wzmlx-shared-vars
+
+  - type: worker
+    name: bot12-worker
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    envVars:
+      - key: BOT_INDEX
+        value: 12
+      - fromGroup: wzmlx-shared-vars
