@@ -148,6 +148,27 @@ class Config:
     def load(cls):
         cls.load_config()
         cls.load_env()
+        from os import environ
+        BOT_INDEX = getenv("BOT_INDEX", "").strip()
+        DATABASE_URL = getattr(cls, "DATABASE_URL", "").strip() or getenv("DATABASE_URL", "").strip()
+        if BOT_INDEX and DATABASE_URL:
+            try:
+                from pymongo import MongoClient
+                from pymongo.server_api import ServerApi
+                idx = int(BOT_INDEX)
+                conn = MongoClient(DATABASE_URL, server_api=ServerApi("1"))
+                db = conn.wzmlx
+                configs = list(db["settings.config"].find().sort("_id", 1))
+                conn.close()
+                if 0 < idx <= len(configs):
+                    selected = configs[idx - 1]
+                    token = selected.get("BOT_TOKEN", "")
+                    if token:
+                        setattr(cls, "BOT_TOKEN", token)
+                        environ["BOT_TOKEN"] = token
+            except Exception:
+                pass
+
 
     @classmethod
     def load_config(cls):

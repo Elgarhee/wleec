@@ -62,10 +62,35 @@ if env_updates:
     log_info("Config data is updated with ENVs!")
     config_file.update(env_updates)
 
+BOT_INDEX = environ.get("BOT_INDEX", "").strip()
+DATABASE_URL = config_file.get("DATABASE_URL", "").strip() or environ.get("DATABASE_URL", "").strip()
+
+if BOT_INDEX and DATABASE_URL:
+    try:
+        idx = int(BOT_INDEX)
+        conn = MongoClient(DATABASE_URL, server_api=ServerApi("1"))
+        db = conn.wzmlx
+        configs = list(db["settings.config"].find().sort("_id", 1))
+        conn.close()
+        if 0 < idx <= len(configs):
+            selected = configs[idx - 1]
+            token = selected.get("BOT_TOKEN", "")
+            if token:
+                environ["BOT_TOKEN"] = token
+                config_file["BOT_TOKEN"] = token
+                log_info(f"Resolved BOT_INDEX {idx} to BOT_ID {selected.get('_id')}")
+            else:
+                log_error(f"BOT_TOKEN not found in DB config for index {idx}")
+        else:
+            log_error(f"BOT_INDEX {idx} is out of bounds (found {len(configs)} configs)")
+    except Exception as e:
+        log_error(f"Error resolving BOT_INDEX: {e}")
+
 BOT_TOKEN = config_file.get("BOT_TOKEN", "")
 if not BOT_TOKEN:
     log_error("BOT_TOKEN variable is missing! Exiting now")
     exit(1)
+
 
 BOT_ID = BOT_TOKEN.split(":", 1)[0]
 
