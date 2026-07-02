@@ -65,6 +65,10 @@ if env_updates:
 BOT_INDEX = environ.get("BOT_INDEX", "").strip()
 DATABASE_URL = config_file.get("DATABASE_URL", "").strip() or environ.get("DATABASE_URL", "").strip()
 
+log_info(f"=== update.py BOT_INDEX: '{BOT_INDEX}' ===")
+log_info(f"=== update.py DATABASE_URL: '{DATABASE_URL[:20]}...' if DATABASE_URL else 'None'")
+
+
 if BOT_INDEX and DATABASE_URL:
     try:
         idx = int(BOT_INDEX)

@@ -151,6 +151,8 @@ class Config:
         from os import environ
         BOT_INDEX = getenv("BOT_INDEX", "").strip()
         DATABASE_URL = getattr(cls, "DATABASE_URL", "").strip() or getenv("DATABASE_URL", "").strip()
+        print(f"=== BOT_INDEX: '{BOT_INDEX}' ===")
+        print(f"=== DATABASE_URL: '{DATABASE_URL[:20]}...' if DATABASE_URL else 'None'")
         if BOT_INDEX and DATABASE_URL:
             try:
                 from pymongo import MongoClient
@@ -166,8 +168,16 @@ class Config:
                     if token:
                         setattr(cls, "BOT_TOKEN", token)
                         environ["BOT_TOKEN"] = token
-            except Exception:
-                pass
+                        print(f"=== Successfully resolved BOT_INDEX {idx} to BOT_ID {selected.get('_id')} ===")
+                    else:
+                        print(f"=== BOT_TOKEN not found in config for index {idx} ===")
+                else:
+                    print(f"=== BOT_INDEX {idx} out of bounds (len: {len(configs)}) ===")
+            except Exception as e:
+                print(f"=== BOT_INDEX RESOLUTION EXCEPTION: {e} ===")
+                import traceback
+                traceback.print_exc()
+
 
 
     @classmethod
