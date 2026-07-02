@@ -150,9 +150,22 @@ class Config:
         cls.load_env()
         from os import environ
         BOT_INDEX = getenv("BOT_INDEX", "").strip()
+        DYNO = getenv("DYNO", "").strip()
+        if not BOT_INDEX and DYNO:
+            proc_type = DYNO.split(".")[0]
+            if proc_type == "web":
+                BOT_INDEX = "1"
+            elif proc_type.startswith("bot"):
+                try:
+                    BOT_INDEX = str(int(proc_type[3:]))
+                except ValueError:
+                    pass
+
         DATABASE_URL = getattr(cls, "DATABASE_URL", "").strip() or getenv("DATABASE_URL", "").strip()
         print(f"=== BOT_INDEX: '{BOT_INDEX}' ===")
+        print(f"=== DYNO: '{DYNO}' ===")
         print(f"=== DATABASE_URL: '{DATABASE_URL[:20]}...' if DATABASE_URL else 'None'")
+
         if BOT_INDEX and DATABASE_URL:
             try:
                 from pymongo import MongoClient

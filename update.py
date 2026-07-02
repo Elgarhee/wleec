@@ -63,10 +63,23 @@ if env_updates:
     config_file.update(env_updates)
 
 BOT_INDEX = environ.get("BOT_INDEX", "").strip()
+DYNO = environ.get("DYNO", "").strip()
+if not BOT_INDEX and DYNO:
+    proc_type = DYNO.split(".")[0]
+    if proc_type == "web":
+        BOT_INDEX = "1"
+    elif proc_type.startswith("bot"):
+        try:
+            BOT_INDEX = str(int(proc_type[3:]))
+        except ValueError:
+            pass
+
 DATABASE_URL = config_file.get("DATABASE_URL", "").strip() or environ.get("DATABASE_URL", "").strip()
 
 log_info(f"=== update.py BOT_INDEX: '{BOT_INDEX}' ===")
+log_info(f"=== update.py DYNO: '{DYNO}' ===")
 log_info(f"=== update.py DATABASE_URL: '{DATABASE_URL[:20]}...' if DATABASE_URL else 'None'")
+
 
 
 if BOT_INDEX and DATABASE_URL:
