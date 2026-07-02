@@ -1,28 +1,6 @@
 # ruff: noqa: E402
 
 import os
-import glob
-
-print("=== DEBUGGING PATH ===")
-print("PATH:", os.environ.get("PATH"))
-if os.path.exists("/wzvenv/bin"):
-    print("Contents of /wzvenv/bin:", os.listdir("/wzvenv/bin"))
-else:
-    print("/wzvenv/bin does not exist!")
-
-print("=== SEARCHING FILESYSTEM FOR stormtorrent ===")
-try:
-    for root, dirs, files in os.walk("/"):
-        if any(p in root for p in ["/proc", "/sys", "/dev", "/var/lib/docker"]):
-            continue
-        try:
-            for file in files:
-                if "stormtorrent" in file or "blitzfetcher" in file or "qbittorrent" in file:
-                    print("FOUND BINARY:", os.path.join(root, file))
-        except Exception:
-            pass
-except Exception as e:
-    print("Filesystem search failed:", e)
 
 if os.path.exists("/wzvenv/bin"):
     os.environ["PATH"] = f"/wzvenv/bin:{os.environ.get('PATH', '')}"

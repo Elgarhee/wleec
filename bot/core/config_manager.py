@@ -250,9 +250,12 @@ class Config:
                 raise ValueError(f"{key} variable is missing!")
 
 
+import shutil
+
 class BinConfig:
-    ARIA2_NAME = "blitzfetcher"
-    QBIT_NAME = "stormtorrent"
-    FFMPEG_NAME = "mediaforge"
-    RCLONE_NAME = "ghostdrive"
-    SABNZBD_NAME = "newsripper"
+    ARIA2_NAME = "aria2c" if shutil.which("aria2c") else "blitzfetcher"
+    QBIT_NAME = "qbittorrent-nox" if shutil.which("qbittorrent-nox") else "stormtorrent"
+    FFMPEG_NAME = "ffmpeg" if shutil.which("ffmpeg") else "mediaforge"
+    RCLONE_NAME = "rclone" if shutil.which("rclone") else "ghostdrive"
+    SABNZBD_NAME = "sabnzbdplus" if shutil.which("sabnzbdplus") else "newsripper"
+
