@@ -1,0 +1,53 @@
+build:
+  docker:
+    web: Dockerfile
+
+run:
+  web:
+    command:
+      - bash start.sh
+    image: web
+  bot2:
+    command:
+      - bash start.sh
+    image: web
+  bot3:
+    command:
+      - bash start.sh
+    image: web
+  bot4:
+    command:
+      - bash start.sh
+    image: web
+  bot5:
+    command:
+      - bash start.sh
+    image: web
+  bot6:
+    command:
+      - bash start.sh
+    image: web
+  bot7:
+    command:
+      - bash start.sh
+    image: web
+  bot8:
+    command:
+      - bash start.sh
+    image: web
+  bot9:
+    command:
+      - bash start.sh
+    image: web
+  bot10:
+    command:
+      - bash start.sh
+    image: web
+  bot11:
+    command:
+      - bash start.sh
+    image: web
+  bot12:
+    command:
+      - bash start.sh
+    image: web
