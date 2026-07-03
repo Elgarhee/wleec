@@ -266,8 +266,11 @@ class Config:
 
     @classmethod
     def load_dict(cls, config_dict):
+        from os import environ
         for key, value in config_dict.items():
             if hasattr(cls, key):
+                if key in environ:
+                    continue
                 if key == "DEFAULT_UPLOAD" and value != "gd":
                     value = "rc"
                 elif key in [
