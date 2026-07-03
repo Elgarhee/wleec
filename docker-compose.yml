@@ -1,6 +1,169 @@
 services:
-  app:
+  bot1:
     build: .
-    command: bash start.sh
-    restart: on-failure
-    network_mode: "host"
+    image: wleec-app
+    container_name: bot1
+    environment:
+      - BOT_INDEX=1
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot2:
+    image: wleec-app
+    container_name: bot2
+    environment:
+      - BOT_INDEX=2
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot3:
+    image: wleec-app
+    container_name: bot3
+    environment:
+      - BOT_INDEX=3
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot4:
+    image: wleec-app
+    container_name: bot4
+    environment:
+      - BOT_INDEX=4
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot5:
+    image: wleec-app
+    container_name: bot5
+    environment:
+      - BOT_INDEX=5
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot6:
+    image: wleec-app
+    container_name: bot6
+    environment:
+      - BOT_INDEX=6
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot7:
+    image: wleec-app
+    container_name: bot7
+    environment:
+      - BOT_INDEX=7
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot8:
+    image: wleec-app
+    container_name: bot8
+    environment:
+      - BOT_INDEX=8
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot9:
+    image: wleec-app
+    container_name: bot9
+    environment:
+      - BOT_INDEX=9
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot10:
+    image: wleec-app
+    container_name: bot10
+    environment:
+      - BOT_INDEX=10
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot11:
+    image: wleec-app
+    container_name: bot11
+    environment:
+      - BOT_INDEX=11
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
+
+  bot12:
+    image: wleec-app
+    container_name: bot12
+    environment:
+      - BOT_INDEX=12
+      - DATABASE_URL=mongodb+srv://agflixbot:Elgarhee1@agflixbot.eoovto8.mongodb.net/?retryWrites=true&w=majority
+      - TELEGRAM_API=28923610
+      - TELEGRAM_HASH=38d2887009953340ca15f004b8f722f9
+      - OWNER_ID=874241545
+      - UPSTREAM_REPO=https://github.com/Elgarhee/wleec
+      - UPSTREAM_BRANCH=wzv3
+      - DISABLE_TORRENTS=True
+    restart: always
