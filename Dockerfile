@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     unzip \
     ca-certificates \
+    libmagic1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install official rclone
