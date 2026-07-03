@@ -1,9 +1,26 @@
-FROM mysterysd/wzmlx:v3
+FROM python:3.11-slim-bookworm
 
 WORKDIR /usr/src/app
 
 RUN chmod 777 /usr/src/app
-RUN rm -f /usr/bin/qbittorrent-nox /usr/local/bin/qbittorrent-nox /usr/bin/stormtorrent /usr/local/bin/stormtorrent
+
+# Install standard whitelisted utilities and binaries
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    aria2 \
+    ffmpeg \
+    p7zip-full \
+    git \
+    curl \
+    unzip \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install official rclone
+RUN curl https://rclone.org/install.sh | bash
+
+# Install uv for package management
+RUN pip install uv
+
 RUN uv venv --system-site-packages
 
 COPY requirements.txt .
@@ -12,3 +29,4 @@ RUN uv pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 CMD ["bash", "start.sh"]
+
