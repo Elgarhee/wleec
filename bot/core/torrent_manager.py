@@ -5,7 +5,7 @@ from pathlib import Path
 
 from aioaria2 import Aria2WebsocketClient
 from aiohttp import ClientError
-from aioqbt.client import create_client
+# aioqbt import deferred
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -52,6 +52,7 @@ class TorrentManager:
                 LOGGER.info("Torrents are disabled.")
                 return
 
+            from aioqbt.client import create_client
             cls.qbittorrent = await create_client("http://localhost:8090/api/v2/")
             cls.qbittorrent = wrap_with_retry(cls.qbittorrent)
 

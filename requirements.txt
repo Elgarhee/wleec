@@ -5,7 +5,6 @@ aioshutil
 anytree
 apscheduler
 aioaria2
-aioqbt
 imdbinfo
 cloudscraper
 dnspython
@@ -30,7 +29,6 @@ pymongo
 pyrotgfork
 python-magic
 pytz
-qbittorrent-api
 requests
 speedtest-cli
 telegraph
