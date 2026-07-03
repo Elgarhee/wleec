@@ -8,21 +8,25 @@ from asyncio import sleep
 from urllib.parse import urlparse
 from contextlib import asynccontextmanager
 from logging import INFO, WARNING, FileHandler, StreamHandler, basicConfig, getLogger
+from os import getenv
 
 from aioaria2 import Aria2HttpClient
 from aiohttp.client_exceptions import ClientError
-from aioqbt.client import create_client
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from sabnzbdapi import SabnzbdClient
-from aioaria2 import Aria2HttpClient
-from aioqbt.client import create_client
-from aiohttp.client_exceptions import ClientError
-from aioqbt.exc import AQError
-
 from web.nodes import extract_file_ids, make_tree
 from aiohttp import ClientSession
+
+disable_torrents = getenv("DISABLE_TORRENTS", "False").lower() in ("true", "1")
+if disable_torrents:
+    class AQError(Exception):
+        pass
+    create_client = None
+else:
+    from aioqbt.client import create_client
+    from aioqbt.exc import AQError
 
 getLogger("httpx").setLevel(WARNING)
 getLogger("aiohttp").setLevel(WARNING)
@@ -44,10 +48,12 @@ SERVICES = {
 async def lifespan(app: FastAPI):
     global aria2, qbittorrent
     aria2 = Aria2HttpClient("http://localhost:6800/jsonrpc")
-    qbittorrent = await create_client("http://localhost:8090/api/v2/")
+    if not disable_torrents:
+        qbittorrent = await create_client("http://localhost:8090/api/v2/")
     yield
     await aria2.close()
-    await qbittorrent.close()
+    if qbittorrent:
+        await qbittorrent.close()
 
 
 app = FastAPI(lifespan=lifespan)
