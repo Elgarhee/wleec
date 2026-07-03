@@ -1,1 +1,2 @@
-.venv/bin/python3 update.py && .venv/bin/python3 -m bot
+export PATH="/usr/src/app/.venv/bin:$PATH"
+python3 update.py && python3 -m bot
