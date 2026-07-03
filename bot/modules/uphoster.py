@@ -36,7 +36,7 @@ from ..helper.mirror_leech_utils.download_utils.gd_download import add_gd_downlo
 from ..helper.mirror_leech_utils.download_utils.jd_download import add_jd_download
 from ..helper.mirror_leech_utils.download_utils.mega_download import add_mega_download
 from ..helper.mirror_leech_utils.download_utils.nzb_downloader import add_nzb
-from ..helper.mirror_leech_utils.download_utils.qbit_download import add_qb_torrent
+# qbit download disabled
 from ..helper.mirror_leech_utils.download_utils.rclone_download import (
     add_rclone_download,
 )
@@ -407,7 +407,8 @@ class Uphoster(TaskListener):
         elif self.is_jd:
             await add_jd_download(self, path)
         elif self.is_qbit:
-            await add_qb_torrent(self, path, ratio, seed_time)
+            await sendMessage(self.message, "Torrent downloads are disabled!")
+            return
         elif self.is_nzb:
             await add_nzb(self, path)
         elif is_rclone_path(self.link):
