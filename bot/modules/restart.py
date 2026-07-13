@@ -70,6 +70,96 @@ async def send_incomplete_task_message(cid, msg_id, msg):
         LOGGER.error(e)
 
 
+import re
+
+def parse_message_link(link: str):
+    # Matches t.me/c/123456789/123 or t.me/username/123
+    match = re.search(r't\.me/(?:c/)?([^/]+)/(\d+)', link)
+    if not match:
+        return None, None
+    chat_identifier, message_id_str = match.groups()
+    message_id = int(message_id_str)
+    
+    # If it's a private chat (digits only), prefix it with -100
+    if chat_identifier.isdigit():
+        chat_id = int(f"-100{chat_identifier}")
+    else:
+        chat_id = chat_identifier
+        
+    return chat_id, message_id
+
+
+async def reprocess_task(link: str):
+    from bot import bot_loop
+    chat_id, message_id = parse_message_link(link)
+    if not chat_id or not message_id:
+        LOGGER.error(f"Could not parse message link: {link}")
+        return
+        
+    try:
+        message = await TgClient.bot.get_messages(chat_id, message_id)
+    except Exception as e:
+        LOGGER.error(f"Failed to fetch message for link {link}: {e}")
+        return
+        
+    if not message:
+        LOGGER.error(f"Fetched message is empty for link: {link}")
+        return
+        
+    text = message.text or message.caption
+    if not text:
+        LOGGER.error(f"Message has no text or caption for link: {link}")
+        return
+        
+    first_word = text.split(None, 1)[0].lower()
+    if first_word.startswith("/"):
+        cmd = first_word[1:]
+        if Config.CMD_SUFFIX and cmd.endswith(Config.CMD_SUFFIX):
+            cmd = cmd[:-len(Config.CMD_SUFFIX)]
+        if "@" in cmd:
+            cmd = cmd.split("@")[0]
+    else:
+        LOGGER.error(f"First word does not start with /: {first_word}")
+        return
+
+    from bot.modules.mirror_leech import (
+        mirror, qb_mirror, jd_mirror, nzb_mirror,
+        leech, qb_leech, jd_leech, nzb_leech
+    )
+    from bot.modules.ytdlp import ytdl, ytdl_leech
+    from bot.modules.clone import clone_node
+    
+    handler = None
+    if cmd in ["mirror", "m"]:
+        handler = mirror
+    elif cmd in ["qbmirror", "qm"]:
+        handler = qb_mirror
+    elif cmd in ["jdmirror", "jm"]:
+        handler = jd_mirror
+    elif cmd in ["nzbmirror", "nm"]:
+        handler = nzb_mirror
+    elif cmd in ["leech", "l"]:
+        handler = leech
+    elif cmd in ["qbleech", "ql"]:
+        handler = qb_leech
+    elif cmd in ["jdleech", "jl"]:
+        handler = jd_leech
+    elif cmd in ["nzbleech", "nl"]:
+        handler = nzb_leech
+    elif cmd in ["ytdl", "y"]:
+        handler = ytdl
+    elif cmd in ["ytdlleech", "yl"]:
+        handler = ytdl_leech
+    elif cmd in ["clone", "cl"]:
+        handler = clone_node
+        
+    if handler:
+        LOGGER.info(f"Re-processing task {link} with command /{cmd}")
+        bot_loop.create_task(handler(TgClient.bot, message))
+    else:
+        LOGGER.warning(f"No handler mapped for command /{cmd} from link {link}")
+
+
 async def restart_notification():
     if await aiopath.isfile(".restartmsg"):
         with open(".restartmsg") as f:
@@ -81,16 +171,19 @@ async def restart_notification():
 
     if Config.INCOMPLETE_TASK_NOTIFIER and Config.DATABASE_URL:
         if notifier_dict := await database.get_incomplete_tasks():
+            from bot import bot_loop
             for cid, data in notifier_dict.items():
                 msg = f"""⌬ <b><i>{"Restarted Successfully!" if cid == chat_id else "Bot Restarted!"}</i></b>
 ┟ <b>Date:</b> {now.strftime("%d/%m/%y")}
 ┠ <b>Time:</b> {now.strftime("%I:%M:%S %p")}
 ┠ <b>TimeZone:</b> Asia/Kolkata
-┖ <b>Version:</b> {get_version()}"""
+┖ <b>Version:</b> {get_version()}
+┖ <b>Status:</b> Re-processing incomplete tasks..."""
                 for tag, links in data.items():
                     msg += f"\n\n{tag}: "
                     for index, link in enumerate(links, start=1):
                         msg += f" <a href='{link}'>{index}</a> |"
+                        bot_loop.create_task(reprocess_task(link))
                         if len(msg.encode()) > 4000:
                             await send_incomplete_task_message(cid, msg_id, msg)
                             msg = ""
@@ -111,6 +204,7 @@ async def restart_notification():
         except Exception as e:
             LOGGER.error(e)
         await remove(".restartmsg")
+
 
 
 @new_task
