@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libmagic1 \
     build-essential \
     python3-dev \
+    procps \
     && rm -rf /var/lib/apt/lists/*
 
 # Install official rclone
