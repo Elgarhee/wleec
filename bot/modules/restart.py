@@ -169,26 +169,13 @@ async def restart_notification():
 
     now = datetime.now(timezone("Asia/Kolkata"))
 
-    if Config.INCOMPLETE_TASK_NOTIFIER and Config.DATABASE_URL:
+    if Config.DATABASE_URL:
         if notifier_dict := await database.get_incomplete_tasks():
             from bot import bot_loop
             for cid, data in notifier_dict.items():
-                msg = f"""⌬ <b><i>{"Restarted Successfully!" if cid == chat_id else "Bot Restarted!"}</i></b>
-┟ <b>Date:</b> {now.strftime("%d/%m/%y")}
-┠ <b>Time:</b> {now.strftime("%I:%M:%S %p")}
-┠ <b>TimeZone:</b> Asia/Kolkata
-┖ <b>Version:</b> {get_version()}
-┖ <b>Status:</b> Re-processing incomplete tasks..."""
                 for tag, links in data.items():
-                    msg += f"\n\n{tag}: "
-                    for index, link in enumerate(links, start=1):
-                        msg += f" <a href='{link}'>{index}</a> |"
+                    for link in links:
                         bot_loop.create_task(reprocess_task(link))
-                        if len(msg.encode()) > 4000:
-                            await send_incomplete_task_message(cid, msg_id, msg)
-                            msg = ""
-                if msg:
-                    await send_incomplete_task_message(cid, msg_id, msg)
 
     if await aiopath.isfile(".restartmsg"):
         try:
